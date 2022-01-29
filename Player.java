@@ -1,5 +1,6 @@
 public class Player {
-    int x, y, order;
+    int x, y, initialRoll;
+    boolean first = false, second = false, third = false, fourth = false;
 
     public Player() {
     }
