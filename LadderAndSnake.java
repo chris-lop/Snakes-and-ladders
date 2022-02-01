@@ -67,17 +67,13 @@ public class LadderAndSnake {
         }
 
         // Sorting Algorithm
-        boolean sorted = false;
-        int temp;
-
-        while (!sorted) {
-            sorted = true;
-            for (int i = 0; i < playerList.length - 1; i++) {
-                if (playerList[i].initialRoll < playerList[i + 1].initialRoll) {
-                    temp = playerList[i].initialRoll;
-                    playerList[i].initialRoll = playerList[i + 1].initialRoll;
-                    playerList[i + 1].initialRoll = temp;
-                    sorted = false;
+        Player temporaryPlayer = new Player();
+        for(int i=0; i<playerList.length; i++) {
+            for(int j = i+1; j<playerList.length; j++) {
+                if(playerList[i].initialRoll>playerList[j].initialRoll) {
+                    temporaryPlayer = playerList[i];
+                    playerList[i]= playerList[j];
+                    playerList[j]= temporaryPlayer;
                 }
             }
         }
@@ -87,34 +83,50 @@ public class LadderAndSnake {
             System.out.println(playerList[i].initialRoll);
         }
 
-        // Equality checker
-        boolean equality;
-        boolean sorted2 = false;
-        int equalityStart = 1, equalityEnd = playerList.length - 1;
-
-        do {
-            for (int i = equalityStart; i <= equalityEnd; i++) {
-                if (playerList[i].initialRoll == playerList[i - 1].initialRoll) {
-                    playerList[i].initialRoll = -1;
-                    playerList[i - 1].initialRoll = -1;
-                    equalityEnd = i;
-                    equality = true;
-
-                    if (playerList[i].initialRoll != playerList[i - 1].initialRoll && playerList[i].initialRoll == -1) {
-                        equalityStart = i;
+        boolean equality = false;
+        int equalityStart = -2, equalityEnd = 1;
+        // First Equality check to set equality start and equality end values
+            for (int j=0;j<playerList.length;j++) {
+                for (int k=j+1;k<playerList.length;k++) {
+                    if (k!=j && playerList[k].initialRoll == playerList[j].initialRoll) {
+                        if (equalityStart == -2) {
+                            equalityStart = j;
+                        }
+                        equality=true;
+                        equalityEnd = k;
                     }
                 }
             }
 
-            // REMOVE LATER
-            System.out.println("for loop 1");
+        while (equality == true) {
 
-            if (playerList[equalityStart].initialRoll != playerList[equalityEnd].initialRoll) {
-                equality = false;
+            // Equality Checker, if it finds one, replaces equal values by -1
+            for (int j=equalityStart;j<=equalityEnd;j++) {
+                for (int k=j+1;k<=equalityEnd;k++) {
+                    if (k!=j && playerList[k].initialRoll == playerList[j].initialRoll) {
+                        playerList[j].initialRoll = -1;
+                        playerList[k].initialRoll = -1;
+                    }
+                }
             }
 
-            if (equality = true) {
-                for (int i = equalityStart; i <= equalityEnd; i++) {
+            // Checks for -1 values, and sets equality to false if there isnt any -1
+            equality = false;
+            for (int f = 0; f <= playerList.length - 1; f++) {
+                if (playerList[f].initialRoll == -1) {
+                    equality = true;
+                }
+            }
+            // REMOVE LATER
+            System.out.println("equality is "+equality);
+
+            // REMOVE LATER
+            System.out.println("for loop 1");
+            
+            // Flip dice for -1 values
+            if (equality == true) {
+                for (int i = 0; i < playerList.length; i++) {
+                    if (playerList[i].initialRoll == -1)
                     playerList[i].initialRoll = this.flipDice();
                 }
 
@@ -122,28 +134,25 @@ public class LadderAndSnake {
                 System.out.println("for loop 2");
             }
 
-            // TODO FIX SORTING ALGO
-            while (!sorted2) {
-                sorted = true;
-                for (int i = equalityStart; i <= equalityEnd; i++) {
-                    if (playerList[i].initialRoll < playerList[i + 1].initialRoll) {
-                        temp = playerList[i].initialRoll;
-                        playerList[i].initialRoll = playerList[i + 1].initialRoll;
-                        playerList[i + 1].initialRoll = temp;
-                        sorted2 = false;
+            //Sorting Algorithm from equality start to equality end
+            Player temporaryPlayer2 = new Player();
+            for(int i=equalityStart; i<=equalityEnd; i++) {
+                for(int j = i+1; j<=equalityEnd; j++) {
+                    if(playerList[i].initialRoll>playerList[j].initialRoll) {
+                        temporaryPlayer2 = playerList[i];
+                        playerList[i]= playerList[j];
+                        playerList[j]= temporaryPlayer2;
                     }
                 }
             }
-
+            
             // REMOVE LATER
             System.out.println("Sorting1");
 
-        } while (equality = true);
-
-        // Sorting test - REMOVE LATER
-        for (int i = 0; i <= playerList.length - 1; i++) {
+            // Sorting test - REMOVE LATER
+            for (int i = 0; i <= playerList.length - 1; i++) {
             System.out.println(playerList[i].initialRoll);
+            }
         }
-
     }
 }
