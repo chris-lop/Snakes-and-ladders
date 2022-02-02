@@ -38,6 +38,8 @@ public class LadderAndSnake {
         // Creation of the minimum 2 players
         Player Player1 = new Player();
         Player Player2 = new Player();
+        Player1.setName("Player 1");
+        Player2.setName("Player 2");
 
         // Placing players on a player list
         Player[] playerList = new Player[this.players];
@@ -47,10 +49,13 @@ public class LadderAndSnake {
         // Creation of 1 or 2 more players depending on user input
         if (this.players == 3) {
             Player Player3 = new Player();
+            Player3.setName("Player 3");
             playerList[2] = Player3;
         } else if (this.players == 4) {
             Player Player3 = new Player();
             Player Player4 = new Player();
+            Player3.setName("Player 3");
+            Player4.setName("Player 4");
             playerList[2] = Player3;
             playerList[3] = Player4;
         }
@@ -64,46 +69,43 @@ public class LadderAndSnake {
 
         for (int i = 0; i <= this.players - 1; i++) {
             playerList[i].initialRoll = this.flipDice();
+            System.out.println(playerList[i].getName() + " got a dice value of " + playerList[i].initialRoll);
         }
 
         // Sorting Algorithm
         Player temporaryPlayer = new Player();
-        for(int i=0; i<playerList.length; i++) {
-            for(int j = i+1; j<playerList.length; j++) {
-                if(playerList[i].initialRoll>playerList[j].initialRoll) {
+        for (int i = 0; i < playerList.length; i++) {
+            for (int j = i + 1; j < playerList.length; j++) {
+                if (playerList[i].initialRoll > playerList[j].initialRoll) {
                     temporaryPlayer = playerList[i];
-                    playerList[i]= playerList[j];
-                    playerList[j]= temporaryPlayer;
+                    playerList[i] = playerList[j];
+                    playerList[j] = temporaryPlayer;
                 }
             }
-        }
-
-        // Sorting test REMOVE LATER
-        for (int i = 0; i <= playerList.length - 1; i++) {
-            System.out.println(playerList[i].initialRoll);
         }
 
         boolean equality = false;
         int equalityStart = -2, equalityEnd = 1;
         // First Equality check to set equality start and equality end values
-            for (int j=0;j<playerList.length;j++) {
-                for (int k=j+1;k<playerList.length;k++) {
-                    if (k!=j && playerList[k].initialRoll == playerList[j].initialRoll) {
-                        if (equalityStart == -2) {
-                            equalityStart = j;
-                        }
-                        equality=true;
-                        equalityEnd = k;
+        for (int j = 0; j < playerList.length; j++) {
+            for (int k = j + 1; k < playerList.length; k++) {
+                if (k != j && playerList[k].initialRoll == playerList[j].initialRoll) {
+                    if (equalityStart == -2) {
+                        equalityStart = j;
                     }
+                    equality = true;
+                    equalityEnd = k;
+                    System.out.println("A tie was achieved between " + playerList[j].getName() + " and " + playerList[k].getName()+ ". Attempting to break the tie.");
                 }
             }
+        }
 
         while (equality == true) {
 
             // Equality Checker, if it finds one, replaces equal values by -1
-            for (int j=equalityStart;j<=equalityEnd;j++) {
-                for (int k=j+1;k<=equalityEnd;k++) {
-                    if (k!=j && playerList[k].initialRoll == playerList[j].initialRoll) {
+            for (int j = equalityStart; j <= equalityEnd; j++) {
+                for (int k = j + 1; k <= equalityEnd; k++) {
+                    if (k != j && playerList[k].initialRoll == playerList[j].initialRoll) {
                         playerList[j].initialRoll = -1;
                         playerList[k].initialRoll = -1;
                     }
@@ -117,42 +119,38 @@ public class LadderAndSnake {
                     equality = true;
                 }
             }
-            // REMOVE LATER
-            System.out.println("equality is "+equality);
 
-            // REMOVE LATER
-            System.out.println("for loop 1");
-            
             // Flip dice for -1 values
             if (equality == true) {
                 for (int i = 0; i < playerList.length; i++) {
-                    if (playerList[i].initialRoll == -1)
-                    playerList[i].initialRoll = this.flipDice();
-                }
-
-                // REMOVE LATER
-                System.out.println("for loop 2");
-            }
-
-            //Sorting Algorithm from equality start to equality end
-            Player temporaryPlayer2 = new Player();
-            for(int i=equalityStart; i<=equalityEnd; i++) {
-                for(int j = i+1; j<=equalityEnd; j++) {
-                    if(playerList[i].initialRoll>playerList[j].initialRoll) {
-                        temporaryPlayer2 = playerList[i];
-                        playerList[i]= playerList[j];
-                        playerList[j]= temporaryPlayer2;
+                    if (playerList[i].initialRoll == -1) {
+                        playerList[i].initialRoll = this.flipDice();
+                        System.out.println(playerList[i].getName() + " got a dice value of " + playerList[i].initialRoll);
                     }
                 }
             }
-            
-            // REMOVE LATER
-            System.out.println("Sorting1");
 
-            // Sorting test - REMOVE LATER
-            for (int i = 0; i <= playerList.length - 1; i++) {
-            System.out.println(playerList[i].initialRoll);
+            // Sorting Algorithm from equality start to equality end
+            Player temporaryPlayer2 = new Player();
+            for (int i = equalityStart; i <= equalityEnd; i++) {
+                for (int j = i + 1; j <= equalityEnd; j++) {
+                    if (playerList[i].initialRoll > playerList[j].initialRoll) {
+                        temporaryPlayer2 = playerList[i];
+                        playerList[i] = playerList[j];
+                        playerList[j] = temporaryPlayer2;
+                    }
+                }
             }
         }
+
+        // Printing final decision
+        System.out.print("Reached final decision on order of playing: ");
+        for (int j = playerList.length-1; j>=0; j--) {
+            System.out.print(playerList[j].getName());
+            if (j>0)
+                System.out.print(", ");
+        }
+
+        
     }
 }
