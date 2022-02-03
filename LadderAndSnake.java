@@ -8,7 +8,7 @@ public class LadderAndSnake {
     // -----------------------------------------------------
 
     // Class attributes
-    int[][] board = new int[10][10];
+    Spot[][] board = new Spot[10][10];
     int players;
 
     // Default Constructor
@@ -33,7 +33,7 @@ public class LadderAndSnake {
         return ThreadLocalRandom.current().nextInt(1, 7);
     }
 
-    // TODO: Play Method (Main Game Engine)
+    // Play Method (Main Game Engine)
     public void play() {
         // Creation of the minimum 2 players
         Player Player1 = new Player();
@@ -151,6 +151,138 @@ public class LadderAndSnake {
                 System.out.print(", ");
         }
 
-        
+        // Game Start
+        System.out.println();
+        System.out.println("Now Starting the Game...");
+
+        /*
+        // Board Setup (spot #)
+        // Verify Board Bounds (10 or 9)
+        int SpotAmount = 100;
+
+        for (int i = 0; i <= 10; i++) {
+            if (i%2 == 1) {
+                for (int j = 10; j>=0; j--) {
+                    board[i][j].setSpot(SpotAmount);
+                    SpotAmount--;
+                }
+            } else if (i%2 == 0) {
+                for (int j = 0; j<=10; j++) {
+                    board[i][j].setSpot(SpotAmount);
+                    SpotAmount--;
+                }
+            }
+        }
+        */
+
+        // While loop that keeps the game going until someone reaches victory (tile 100 = victory)
+        boolean victory = false;
+
+        while (victory == false) {
+            for (int j = playerList.length-1; j>=0; j--) {
+                
+                // Dice flips for the player
+                playerList[j].setRoll(this.flipDice());
+                System.out.println(playerList[j].getName() + " got a dice value of " + playerList[j].getRoll());
+
+                // Increment spot - if it goes past 100, go backwards
+                if (playerList[j].getSpot()+playerList[j].getRoll()<=100){
+                    playerList[j].move(playerList[j].getRoll());
+                    System.out.print(playerList[j].getName() + " moved to square " + playerList[j].getSpot());
+                } else {
+                    playerList[j].move(playerList[j].getRoll());
+                    playerList[j].move((100-playerList[j].getSpot())*2);
+                    System.out.print(playerList[j].getName() + " moved to square " + playerList[j].getSpot());
+                }
+                
+
+                // Check player coordinate in array and effect (ladder or snake or victory)
+                    // If Statement - Ladders
+                    if (playerList[j].getSpot()==1) {
+                        playerList[j].setSpot(38);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==4) {
+                        playerList[j].setSpot(14);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==9) {
+                        playerList[j].setSpot(31);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==36) {
+                        playerList[j].setSpot(44);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==21) {
+                        playerList[j].setSpot(42);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==51) {
+                        playerList[j].setSpot(67);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==71) {
+                        playerList[j].setSpot(91);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==80) {
+                        playerList[j].setSpot(100);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+                    if (playerList[j].getSpot()==28) {
+                        playerList[j].setSpot(84);
+                        System.out.print(" then up to square "+playerList[j].getSpot());
+                    }
+
+                     // If Statement - Snakes
+                     if (playerList[j].getSpot()==98) {
+                         playerList[j].setSpot(78);
+                         System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+                     if (playerList[j].getSpot()==97) {
+                         playerList[j].setSpot(76);
+                         System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+                     if (playerList[j].getSpot()==95) {
+                         playerList[j].setSpot(24);
+                         System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+                     if (playerList[j].getSpot()==93) {
+                         playerList[j].setSpot(68);
+                         System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+                     if (playerList[j].getSpot()==79) {
+                         playerList[j].setSpot(19);
+                         System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+                     if (playerList[j].getSpot()==64) {
+                         playerList[j].setSpot(60);
+                        System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+                     if (playerList[j].getSpot()==48) {
+                         playerList[j].setSpot(30);
+                         System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+                     if (playerList[j].getSpot()==16) {
+                         playerList[j].setSpot(6);
+                         System.out.print(" then down to square "+playerList[j].getSpot());
+                     }
+
+                    System.out.print("\n");
+
+                    // if victory, set boolean to true
+                    if (playerList[j].getSpot()==100) {
+                        victory = true;
+                        System.out.println("Game is over, "+playerList[j].getName()+" won the game!");
+                        System.exit(0);
+                    }
+            }
+            
+            System.out.println();
+
+            if (victory == false)
+                System.out.println("Game not over, flipping again");
+        }    
     }
 }
