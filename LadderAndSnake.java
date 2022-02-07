@@ -1,42 +1,81 @@
+// -----------------------------------------------------
+// Assignment 0
+// Question: Part I
+// Written by: Christopher Lopez, ID: 40199547
+// -----------------------------------------------------
+
 import java.util.concurrent.ThreadLocalRandom;
 
+/** 
+ * Name(s) and ID(s) Christopher Lopez, 40199547
+ * COMP 249
+ * Assignment # 0
+ * Due Date February 7th, 2022
+ * 
+ * The LadderAndSnake class is the blueprint for the core game engine. It holds important game functions such as the dice roll method, and the play method, which initiates and runs the entire game.
+*/
 public class LadderAndSnake {
-    // -----------------------------------------------------
-    // Assignment 0
-    // Question: Part I
-    // Written by: Christopher Lopez, ID: 40199547
-    // -----------------------------------------------------
 
     // Class attributes
     Spot[][] board = new Spot[10][10];
     int players;
 
     // Default Constructor
+
+    /** 
+     * Default constructor for class LadderAndSnake
+    */
     public LadderAndSnake() {
 
     }
-
+    
     // Parameterized constructor
+
+    /** 
+     * Parameterized constructor for class LadderAndSnake
+     * @param InsertPlayers Variable holding the number of players playing the given game.
+    */
     public LadderAndSnake(int InsertPlayers) {
         players = InsertPlayers;
     }
 
     // Basic Methods (Getters, Setters)
 
+    /** 
+     * This method returns the amount of players in the given game.
+     * @return Returns the amount of players in the given game.
+    */
     public int getPlayers() {
         return this.players;
     }
 
+    /** 
+     * This mutator method changes the number of players in a game.
+     * @param NewPlayers Variable holding the new amount of players.
+    */
     public void setPlayers(int NewPlayers) {
         players = NewPlayers;
     }
 
     // Method that flips dice and returns values from 1 to 6 inclusively
+
+    /** 
+     * This method generates a random integer from 1 to 6 inclusively.
+     * @return A random integer from 1 to 6 inclusively.
+    */
     public int flipDice() {
         return ThreadLocalRandom.current().nextInt(1, 7);
     }
 
     // Play Method (Main Game Engine)
+
+    /** 
+     * This method is the main game engine that will run the entire game.
+     * It first creates the amount of player objects required based on the user input.
+     * Then, it runs an algorithm that decides the order of play amongst the players based on random dice rolls, and sorts them in an array.
+     * This algorithm also accounts for equalities, and re-rolls players who have equalities until the equality is broken.
+     * Finally, it starts the game, and makes each player roll a dice until one of the players win.
+    */
     public void play() {
         // Creation of the minimum 2 players
         Player Player1 = new Player();
@@ -67,7 +106,6 @@ public class LadderAndSnake {
         System.out.println("Game is played by " + this.players + " players");
 
         // Algorithm deciding which player will go first
-        // TODO: Use getters and setters instead of this operator
         System.out.println("Now deciding which player will start playing;");
 
         for (int i = 0; i <= this.players - 1; i++) {
@@ -258,6 +296,7 @@ public class LadderAndSnake {
                     if (playerList[j].getSpot()==100) {
                         victory = true;
                         System.out.println("Game is over, "+playerList[j].getName()+" won the game!");
+                        System.out.println("Terminating the program.");
                         System.exit(0);
                     }
             }
