@@ -18,15 +18,18 @@ public class LadderAndSnake {
 
     // Parameterized constructor
     public LadderAndSnake(int InsertPlayers) {
-
-        // Limits player input to 2-4 players
-        if (InsertPlayers > 4 || InsertPlayers < 2) {
-            throw new IllegalArgumentException("InsertPlayers must be in range 2-4 but found " + InsertPlayers);
-        }
         players = InsertPlayers;
     }
 
-    // TODO: Basic Methods (Getters, Setters, etc.)
+    // Basic Methods (Getters, Setters)
+
+    public int getPlayers() {
+        return this.players;
+    }
+
+    public void setPlayers(int NewPlayers) {
+        players = NewPlayers;
+    }
 
     // Method that flips dice and returns values from 1 to 6 inclusively
     public int flipDice() {
@@ -154,26 +157,6 @@ public class LadderAndSnake {
         // Game Start
         System.out.println();
         System.out.println("Now Starting the Game...");
-
-        /*
-        // Board Setup (spot #)
-        // Verify Board Bounds (10 or 9)
-        int SpotAmount = 100;
-
-        for (int i = 0; i <= 10; i++) {
-            if (i%2 == 1) {
-                for (int j = 10; j>=0; j--) {
-                    board[i][j].setSpot(SpotAmount);
-                    SpotAmount--;
-                }
-            } else if (i%2 == 0) {
-                for (int j = 0; j<=10; j++) {
-                    board[i][j].setSpot(SpotAmount);
-                    SpotAmount--;
-                }
-            }
-        }
-        */
 
         // While loop that keeps the game going until someone reaches victory (tile 100 = victory)
         boolean victory = false;
